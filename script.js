@@ -25,8 +25,12 @@ function addTask() {
       });
     }
 
-    updateList();
+    // --- CORRECCIÓN AQUÍ ---
+    // Mostramos la sección que contiene la lista y el botón de guardar
+    document.getElementById("listSection").classList.remove("hidden");
     document.getElementById("display").classList.remove("hidden");
+
+    updateList();
 
     // Limpiar inputs
     nameInput.value = "";
@@ -37,7 +41,14 @@ function addTask() {
 
 function updateList() {
   const list = document.getElementById("taskList");
-  // Solo mostramos los ejercicios (tipo 'work') en la lista de preparación
+  const listSection = document.getElementById("listSection");
+
+  // Si no hay ejercicios, ocultamos la sección
+  if (routine.length === 0) {
+    listSection.classList.add("hidden");
+    return;
+  }
+
   list.innerHTML = routine
     .filter((item) => item.type === "work")
     .map(
@@ -63,9 +74,11 @@ function togglePause() {
 async function startRoutine() {
   if (routine.length === 0) return;
 
+  // Ocultamos todo lo que no sea el cronómetro
   document.getElementById("setup").style.display = "none";
-  document.getElementById("taskList").style.display = "none";
+  document.getElementById("listSection").classList.add("hidden"); // Ocultamos la lista y el botón guardar
   document.getElementById("startBtn").style.display = "none";
+  document.getElementById("historySection").classList.add("hidden"); // Ocultamos historial para foco total
   document.getElementById("pauseBtn").classList.remove("hidden");
 
   for (let item of routine) {
@@ -81,9 +94,7 @@ async function startRoutine() {
   document.getElementById("pauseBtn").classList.add("hidden");
   document.getElementById("status-label").innerText = "¡MUY BIEN AMOR! ❤️";
   document.getElementById("timer").innerText = "🏆";
-
-  // Opcional: Podrías llamar a saveWorkout() aquí automáticamente
-  // o dejar que el usuario lo guarde con un botón y nombre.
+  document.getElementById("currentTask").innerText = "¡Completado!";
 }
 
 function runTimer(name, seconds) {
@@ -119,16 +130,16 @@ function saveCurrentRoutine() {
   const history = JSON.parse(localStorage.getItem("workoutHistory")) || [];
 
   const newEntry = {
-    id: Date.now(), // ID único basado en tiempo
+    id: Date.now(),
     name: routineName,
     date: new Date().toLocaleDateString(),
-    data: [...routine], // Guardamos toda la estructura de ejercicios y descansos
+    data: [...routine],
   };
 
   history.unshift(newEntry);
   localStorage.setItem("workoutHistory", JSON.stringify(history));
 
-  nameInput.value = ""; // Limpiar el nombre
+  nameInput.value = "";
   loadHistory();
   alert("Rutina '" + routineName + "' guardada con éxito.");
 }
@@ -146,12 +157,12 @@ function loadHistory() {
   container.innerHTML = history
     .map(
       (item) => `
-        <div class="history-item" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+        <div class="history-item" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; background: rgba(255,255,255,0.05); padding: 10px; border-radius: 10px;">
             <div>
-                <strong style="color: var(--primary);">${item.name}</strong><br>
+                <strong style="color: #6366f1;">${item.name}</strong><br>
                 <small>${item.date} - ${item.data.filter((i) => i.type === "work").length} ej.</small>
             </div>
-            <button onclick="loadRoutine(${item.id})" class="btn-repeat" style="padding: 5px 10px; font-size: 0.7rem; width: auto;">Cargar</button>
+            <button onclick="loadRoutine(${item.id})" class="btn-repeat" style="padding: 5px 10px; font-size: 0.7rem; width: auto; background: #a855f7; color: white;">Cargar</button>
         </div>
     `,
     )
@@ -163,10 +174,15 @@ function loadRoutine(id) {
   const routineToLoad = history.find((item) => item.id === id);
 
   if (routineToLoad) {
-    routine = [...routineToLoad.data]; // Cargamos los datos en la variable global
-    updateList();
+    routine = [...routineToLoad.data];
+
+    // --- CORRECCIÓN AQUÍ ---
+    // Al cargar una rutina, también debemos mostrar la sección de la lista
+    document.getElementById("listSection").classList.remove("hidden");
     document.getElementById("display").classList.remove("hidden");
-    window.scrollTo({ top: 0, behavior: "smooth" }); // Subir al principio para ver la rutina
+
+    updateList();
+    window.scrollTo({ top: 0, behavior: "smooth" });
     alert("Rutina '" + routineToLoad.name + "' cargada.");
   }
 }

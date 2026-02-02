@@ -116,7 +116,12 @@ button:hover { transform: scale(1.03); filter: brightness(1.2); }
     border-left: 4px solid var(--primary);
 }
 
-.history-list { max-height: 250px; overflow-y: auto; margin-top: 10px; }
+.history-list {
+    max-height: 250px;
+    overflow-y: auto;
+    margin-top: 10px; 
+}
+
 .history-item {
     background: rgba(255, 255, 255, 0.05);
     padding: 12px;
