@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>FocusTimer</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="background-overlay"></div>
+
+    <div class="container">
+        <header>
+            <h1>Focus<span>Timer</span></h1>
+            <p>Ánimo amor!</p>
+        </header>
+
+        <section id="setup" class="glass-card">
+            <div class="input-group">
+                <input type="text" id="taskName" placeholder="¿Qué ejercicio harás?">
+                <div class="time-inputs">
+                    <input type="number" id="taskTime" placeholder="Trabajo (seg)">
+                    <input type="number" id="restTime" placeholder="Descanso (seg)">
+                </div>
+            </div>
+            <button id="addBtn" onclick="addTask()">Añadir a la lista</button>
+        </section>
+
+        <section id="taskList" class="list-container"></section>
+
+        <section id="display" class="glass-card hidden">
+            <div class="timer-wrapper">
+                <span id="status-label">PREPARADO</span>
+                <h2 id="currentTask">---</h2>
+                <div id="timer">00</div>
+            </div>
+            <div class="controls">
+                <button id="startBtn" class="btn-primary" onclick="startRoutine()">Iniciar Entrenamiento</button>
+                <button class="btn-secondary" onclick="location.reload()">Reiniciar</button>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
