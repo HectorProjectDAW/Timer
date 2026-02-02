@@ -1,5 +1,52 @@
 let routine = [];
 let isPaused = false;
+document.addEventListener("DOMContentLoaded", loadHistory);
+
+function saveWorkout() {
+  const history = JSON.parse(localStorage.getItem("workoutHistory")) || [];
+
+  // Creamos un resumen del entrenamiento
+  const newEntry = {
+    date:
+      new Date().toLocaleDateString() +
+      " " +
+      new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+    exercises: routine.filter((i) => i.type === "work").length,
+  };
+
+  history.unshift(newEntry); // Añadir al principio
+  localStorage.setItem("workoutHistory", JSON.stringify(history.slice(0, 10))); // Guardamos los últimos 10
+  loadHistory();
+}
+
+function loadHistory() {
+  const history = JSON.parse(localStorage.getItem("workoutHistory")) || [];
+  const container = document.getElementById("workoutHistory");
+
+  if (history.length === 0) {
+    container.innerHTML =
+      '<p style="opacity: 0.5; font-size: 0.8rem;">Aún no hay entrenamientos.</p>';
+    return;
+  }
+
+  container.innerHTML = history
+    .map(
+      (item) => `
+        <div class="history-item">
+            <span>${item.date}</span>
+            <strong>${item.exercises} ejercicios</strong>
+        </div>
+    `,
+    )
+    .join("");
+}
+
+function clearHistory() {
+  if (confirm("¿Borrar todo el historial?")) {
+    localStorage.removeItem("workoutHistory");
+    loadHistory();
+  }
+}
 
 function togglePause() {
   isPaused = !isPaused;
@@ -71,6 +118,7 @@ async function startRoutine() {
   document.getElementById("pauseBtn").classList.add("hidden");
   document.getElementById("status-label").innerText = "MUY BIEN AMOR!";
   document.getElementById("timer").innerText = "🏆";
+  saveWorkout();
 }
 
 function runTimer(name, seconds) {
@@ -83,9 +131,12 @@ function runTimer(name, seconds) {
         // <--- SOLO RESTA SI NO ESTÁ PAUSADO
         document.getElementById("timer").innerText = timeLeft;
         if (timeLeft <= 0) {
+          document.getElementById("timer").innerText = "0";
           clearInterval(interval);
           resolve();
+          return;
         }
+        document.getElementById("timer").innerText = timeLeft;
         timeLeft--;
       }
     }, 1000);
