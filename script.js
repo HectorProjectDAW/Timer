@@ -1,4 +1,12 @@
 let routine = [];
+let isPaused = false;
+
+function togglePause() {
+  isPaused = !isPaused;
+  const btn = document.getElementById("pauseBtn");
+  btn.innerText = isPaused ? "Reanudar" : "Pausar";
+  btn.classList.toggle("paused", isPaused);
+}
 
 function addTask() {
   const nameInput = document.getElementById("taskName");
@@ -46,16 +54,13 @@ function updateList() {
 }
 
 async function startRoutine() {
-  const setup = document.getElementById("setup");
-  const list = document.getElementById("taskList");
-  const startBtn = document.getElementById("startBtn");
-  const display = document.getElementById("display");
-
-  setup.style.display = "none";
-  list.style.display = "none";
-  startBtn.style.display = "none";
+  document.getElementById("setup").style.display = "none";
+  document.getElementById("taskList").style.display = "none";
+  document.getElementById("startBtn").style.display = "none";
+  document.getElementById("pauseBtn").classList.remove("hidden"); // Mostrar pausa
 
   for (let item of routine) {
+    const display = document.getElementById("display");
     display.className =
       "glass-card " + (item.type === "work" ? "working" : "resting");
     document.getElementById("status-label").innerText =
@@ -63,8 +68,8 @@ async function startRoutine() {
     await runTimer(item.name, item.time);
   }
 
-  document.getElementById("status-label").innerText = "COMPLETADO";
-  document.getElementById("currentTask").innerText = "MUY BIEN AMOR!!!";
+  document.getElementById("pauseBtn").classList.add("hidden");
+  document.getElementById("status-label").innerText = "MUY BIEN AMOR!";
   document.getElementById("timer").innerText = "🏆";
 }
 
@@ -74,12 +79,15 @@ function runTimer(name, seconds) {
     document.getElementById("currentTask").innerText = name;
 
     const interval = setInterval(() => {
-      document.getElementById("timer").innerText = timeLeft;
-      if (timeLeft <= 0) {
-        clearInterval(interval);
-        resolve();
+      if (!isPaused) {
+        // <--- SOLO RESTA SI NO ESTÁ PAUSADO
+        document.getElementById("timer").innerText = timeLeft;
+        if (timeLeft <= 0) {
+          clearInterval(interval);
+          resolve();
+        }
+        timeLeft--;
       }
-      timeLeft--;
     }, 1000);
   });
 }

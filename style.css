@@ -82,6 +82,20 @@ button {
     margin-top: 10px;
 }
 
+.btn-pause {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 16px 30px;
+    width: 100%;
+    margin-top: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.paused {
+    background: var(--warning) !important; /* Cambia a naranja cuando está pausado */
+    color: white;
+}
+
 button:hover { transform: scale(1.03); filter: brightness(1.2); }
 
 /* Lista de tareas */
