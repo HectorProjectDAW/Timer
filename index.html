@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <title>FocusTimer</title>
+    <title>FocusTimer Pro</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
 </head>
@@ -15,7 +15,7 @@
     <div class="container">
         <header>
             <h1>Focus<span>Timer</span></h1>
-            <p>Ánimo amor!</p>
+            <p>¡Ánimo amor! 💪</p>
         </header>
 
         <section id="setup" class="glass-card">
@@ -29,13 +29,13 @@
             <button id="addBtn" onclick="addTask()">Añadir a la lista</button>
         </section>
 
-        <section id="taskList" class="list-container"></section>
-        <section id="historySection" class="glass-card">
-            <h3 style="margin-bottom: 15px; font-size: 1.1rem; opacity: 0.9;">Historial Reciente</h3>
-            <div id="workoutHistory" class="history-list">
+        <section id="listSection" class="hidden">
+            <div id="taskList" class="list-container"></div>
+
+            <div id="saveRoutineContainer" class="glass-card" style="margin-top: 15px;">
+                <input type="text" id="routineName" placeholder="Nombre de esta rutina (ej. Cardio)">
+                <button onclick="saveCurrentRoutine()" class="btn-save">💾 Guardar Rutina</button>
             </div>
-            <button class="btn-secondary" onclick="clearHistory()" style="font-size: 0.8rem; margin-top: 10px;">Limpiar
-                Historial</button>
         </section>
 
         <section id="display" class="glass-card hidden">
@@ -46,9 +46,17 @@
             </div>
             <div class="controls">
                 <button id="startBtn" class="btn-primary" onclick="startRoutine()">Iniciar Entrenamiento</button>
-                <button id="pauseBtn" class="btn-pause hidden" onclick="togglePause()">Pausar</button>
-                <button class="btn-secondary" onclick="location.reload()">Reiniciar</button>
+                <div class="action-buttons">
+                    <button id="pauseBtn" class="btn-pause hidden" onclick="togglePause()">Pausar</button>
+                    <button class="btn-secondary" onclick="location.reload()">Reiniciar</button>
+                </div>
             </div>
+        </section>
+
+        <section id="historySection" class="glass-card">
+            <h3 style="margin-bottom: 15px; font-size: 1.1rem; opacity: 0.9;">Mis Rutinas</h3>
+            <div id="workoutHistory" class="history-list"></div>
+            <button class="btn-clear" onclick="clearHistory()">Limpiar Historial</button>
         </section>
     </div>
 

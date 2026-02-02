@@ -69,7 +69,7 @@ header p { opacity: 0.7; font-size: 0.9rem; }
 button {
     cursor: pointer;
     border: none;
-    border-radius: 50px; /* Botones redondos */
+    border-radius: 50px;
     font-weight: 600;
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
@@ -82,6 +82,14 @@ button {
     margin-top: 10px;
 }
 
+.btn-save { 
+    width: 100%;
+    padding: 10px;
+    background: var(--secondary); 
+    color: white; 
+    margin-top: 5px;
+}
+
 .btn-pause {
     background: rgba(255, 255, 255, 0.2);
     color: white;
@@ -92,13 +100,12 @@ button {
 }
 
 .paused {
-    background: var(--warning) !important; /* Cambia a naranja cuando está pausado */
+    background: var(--warning) !important;
     color: white;
 }
 
 button:hover { transform: scale(1.03); filter: brightness(1.2); }
 
-/* Lista de tareas */
 .task-item {
     background: rgba(255, 255, 255, 0.03);
     padding: 12px 20px;
@@ -109,26 +116,19 @@ button:hover { transform: scale(1.03); filter: brightness(1.2); }
     border-left: 4px solid var(--primary);
 }
 
-.history-list {
-    max-height: 200px;
-    overflow-y: auto;
-    text-align: left;
-}
-
+.history-list { max-height: 250px; overflow-y: auto; margin-top: 10px; }
 .history-item {
     background: rgba(255, 255, 255, 0.05);
-    padding: 8px 12px;
-    border-radius: 10px;
-    margin-bottom: 5px;
-    font-size: 0.85rem;
+    padding: 12px;
+    border-radius: 15px;
+    margin-bottom: 10px;
     display: flex;
     justify-content: space-between;
-    border-left: 3px solid var(--secondary);
+    align-items: center;
 }
 
 .history-item span { opacity: 0.6; font-size: 0.75rem; }
 
-/* Pantalla del Timer */
 .timer-wrapper { text-align: center; }
 #status-label { font-size: 0.8rem; font-weight: 700; letter-spacing: 3px; color: var(--primary); }
 #timer { font-size: 6rem; font-weight: 800; line-height: 1; margin: 10px 0; }
@@ -137,7 +137,6 @@ button:hover { transform: scale(1.03); filter: brightness(1.2); }
 .btn-primary { padding: 16px 30px; background: white; color: #1e1b4b; width: 100%; font-size: 1.1rem; }
 .btn-secondary { background: transparent; color: white; padding: 10px; width: 100%; margin-top: 15px; opacity: 0.6; }
 
-/* Estados de entrenamiento */
 .working { border: 2px solid var(--success); box-shadow: 0 0 20px rgba(34, 197, 94, 0.2); }
 .working #status-label { color: var(--success); }
 
@@ -149,7 +148,7 @@ button:hover { transform: scale(1.03); filter: brightness(1.2); }
 @media (max-width: 480px) {
     body {
         padding: 10px;
-        align-items: flex-start; /* En móvil es mejor que empiece arriba para que el teclado no tape todo */
+        align-items: flex-start;
         padding-top: 30px;
     }
 
@@ -162,16 +161,16 @@ button:hover { transform: scale(1.03); filter: brightness(1.2); }
     }
 
     .glass-card {
-        padding: 1.2rem; /* Menos padding para ganar espacio */
+        padding: 1.2rem;
         border-radius: 20px;
     }
 
     .time-inputs {
-        grid-template-columns: 1fr; /* Los tiempos se apilan en lugar de ir en fila si la pantalla es muy pequeña */
+        grid-template-columns: 1fr;
     }
 
     #timer {
-        font-size: 4.5rem; /* Un poco más pequeño para que no rompa el diseño */
+        font-size: 4.5rem; 
     }
 
     .task-item {
@@ -179,14 +178,12 @@ button:hover { transform: scale(1.03); filter: brightness(1.2); }
         padding: 10px 15px;
     }
 
-    /* Botones más grandes para dedos */
     button {
         padding: 18px !important; 
         font-size: 1rem;
     }
 }
 
-/* Evitar que el teclado tape los botones en pantallas muy bajitas */
 @media (max-height: 600px) {
     header { margin-bottom: 1rem; }
     #timer { font-size: 3.5rem; }
