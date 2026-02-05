@@ -1,15 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
-<!-- - sonido bonito
-
-
-- si se puede, cuando termine todo el ejercicio salga el sonido del esqueleto
-!-->
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <title>FocusTimer Pro</title>
+    <title>NurietabeeWork</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
 </head>
@@ -19,8 +14,8 @@
 
     <div class="container">
         <header>
-            <h1>Focus<span>Timer</span></h1>
-            <p>¡Ánimo amor! 💪</p>
+            <h1>Animo<span>Cariño</span></h1>
+            <p>Dale un poco más, ya lo tienes</p>
         </header>
 
         <section id="setup" class="glass-card">
@@ -39,7 +34,7 @@
 
             <div id="saveRoutineContainer" class="glass-card" style="margin-top: 15px;">
                 <input type="text" id="routineName" placeholder="Nombre de esta rutina (ej. Cardio)">
-                <button onclick="saveCurrentRoutine()" class="btn-save">💾 Guardar Rutina</button>
+                <button onclick="saveCurrentRoutine()" class="btn-save">Guardar Rutina</button>
             </div>
         </section>
 
@@ -53,6 +48,7 @@
                 <button id="startBtn" class="btn-primary" onclick="startRoutine()">Iniciar Entrenamiento</button>
                 <div class="action-buttons">
                     <button id="pauseBtn" class="btn-pause hidden" onclick="togglePause()">Pausar</button>
+                    <button id="skipBtn" class="btn-secondary hidden" onclick="skipTask()">Saltar</button>
                     <button class="btn-secondary" onclick="location.reload()">Reiniciar</button>
                 </div>
             </div>

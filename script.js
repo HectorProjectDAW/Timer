@@ -14,10 +14,15 @@ document.addEventListener("input", (e) => {
 // 2. ESTADO GLOBAL
 let routine = [];
 let isPaused = false;
+let isSkipped = false;
 
 document.addEventListener("DOMContentLoaded", loadHistory);
 
 // --- LÓGICA DE LA RUTINA ---
+
+function skipTask() {
+  isSkipped = true;
+}
 
 function addTask() {
   const nameInput = document.getElementById("taskName");
@@ -124,9 +129,16 @@ async function startRoutine() {
 function runTimer(name, seconds) {
   return new Promise((resolve) => {
     let timeLeft = seconds;
+    isSkipped = false;
     document.getElementById("currentTask").innerText = name;
 
     const interval = setInterval(() => {
+      if (isSkipped) {
+        clearInterval(interval);
+        resolve();
+        return;
+      }
+
       if (!isPaused) {
         document.getElementById("timer").innerText = timeLeft;
         if (timeLeft <= 0) {
