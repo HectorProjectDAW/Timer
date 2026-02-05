@@ -2,11 +2,9 @@
 <html lang="es">
 <!-- - sonido bonito
 
-- que se guarde todo
 
 - si se puede, cuando termine todo el ejercicio salga el sonido del esqueleto
-
-- importar / exportar !-->
+!-->
 
 <head>
     <meta charset="UTF-8">
@@ -57,6 +55,11 @@
                     <button id="pauseBtn" class="btn-pause hidden" onclick="togglePause()">Pausar</button>
                     <button class="btn-secondary" onclick="location.reload()">Reiniciar</button>
                 </div>
+            </div>
+            <div class="audio-controls" style="margin-bottom: 15px; opacity: 0.8; font-size: 0.8rem;">
+                <label>🎵 Volumen Música</label>
+                <input type="range" id="volumeControl" min="0" max="1" step="0.1" value="0.5"
+                    style="width: 100%; accent-color: var(--primary);">
             </div>
         </section>
 

@@ -1,3 +1,17 @@
+// 1. CONFIGURACIÓN DE SONIDOS (Siempre al principio)
+const ambientMusic = new Audio("assets/audio/Chill-Music.mp3");
+ambientMusic.loop = true;
+
+const victorySound = new Audio("assets/audio/skyrim-skeleton.mp3");
+
+// Ajuste de volumen dinámico
+document.addEventListener("input", (e) => {
+  if (e.target.id === "volumeControl") {
+    ambientMusic.volume = e.target.value;
+  }
+});
+
+// 2. ESTADO GLOBAL
 let routine = [];
 let isPaused = false;
 
@@ -25,14 +39,11 @@ function addTask() {
       });
     }
 
-    // --- CORRECCIÓN AQUÍ ---
-    // Mostramos la sección que contiene la lista y el botón de guardar
     document.getElementById("listSection").classList.remove("hidden");
     document.getElementById("display").classList.remove("hidden");
 
     updateList();
 
-    // Limpiar inputs
     nameInput.value = "";
     workInput.value = "";
     restInput.value = "";
@@ -43,7 +54,6 @@ function updateList() {
   const list = document.getElementById("taskList");
   const listSection = document.getElementById("listSection");
 
-  // Si no hay ejercicios, ocultamos la sección
   if (routine.length === 0) {
     listSection.classList.add("hidden");
     return;
@@ -69,16 +79,25 @@ function togglePause() {
   const btn = document.getElementById("pauseBtn");
   btn.innerText = isPaused ? "Reanudar" : "Pausar";
   btn.classList.toggle("paused", isPaused);
+
+  if (isPaused) {
+    ambientMusic.pause();
+  } else {
+    ambientMusic.play().catch(() => {}); // El catch evita errores si el navegador bloquea el audio
+  }
 }
 
 async function startRoutine() {
   if (routine.length === 0) return;
 
-  // Ocultamos todo lo que no sea el cronómetro
+  // Iniciar música
+  ambientMusic.currentTime = 0;
+  ambientMusic.play().catch((err) => console.log("Audio bloqueado:", err));
+
   document.getElementById("setup").style.display = "none";
-  document.getElementById("listSection").classList.add("hidden"); // Ocultamos la lista y el botón guardar
+  document.getElementById("listSection").classList.add("hidden");
   document.getElementById("startBtn").style.display = "none";
-  document.getElementById("historySection").classList.add("hidden"); // Ocultamos historial para foco total
+  document.getElementById("historySection").classList.add("hidden");
   document.getElementById("pauseBtn").classList.remove("hidden");
 
   for (let item of routine) {
@@ -91,10 +110,15 @@ async function startRoutine() {
     await runTimer(item.name, item.time);
   }
 
+  // Finalización
+  ambientMusic.pause();
+  victorySound.play();
+
   document.getElementById("pauseBtn").classList.add("hidden");
   document.getElementById("status-label").innerText = "¡MUY BIEN AMOR! ❤️";
   document.getElementById("timer").innerText = "🏆";
-  document.getElementById("currentTask").innerText = "¡Completado!";
+  document.getElementById("currentTask").innerText =
+    "¡Entrenamiento Completado!";
 }
 
 function runTimer(name, seconds) {
@@ -116,7 +140,7 @@ function runTimer(name, seconds) {
   });
 }
 
-// --- LÓGICA DEL HISTORIAL (GUARDAR Y CARGAR) ---
+// --- HISTORIAL, IMPORTAR Y EXPORTAR ---
 
 function saveCurrentRoutine() {
   const nameInput = document.getElementById("routineName");
@@ -128,7 +152,6 @@ function saveCurrentRoutine() {
   }
 
   const history = JSON.parse(localStorage.getItem("workoutHistory")) || [];
-
   const newEntry = {
     id: Date.now(),
     name: routineName,
@@ -141,7 +164,7 @@ function saveCurrentRoutine() {
 
   nameInput.value = "";
   loadHistory();
-  alert("Rutina '" + routineName + "' guardada con éxito.");
+  alert("Rutina '" + routineName + "' guardada.");
 }
 
 function loadHistory() {
@@ -150,19 +173,19 @@ function loadHistory() {
 
   if (history.length === 0) {
     container.innerHTML =
-      '<p style="opacity: 0.5; font-size: 0.8rem;">Aún no hay rutinas guardadas.</p>';
+      '<p style="opacity: 0.5; font-size: 0.8rem;">Aún no hay rutinas.</p>';
     return;
   }
 
   container.innerHTML = history
     .map(
       (item) => `
-        <div class="history-item" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; background: rgba(255,255,255,0.05); padding: 10px; border-radius: 10px;">
+        <div class="history-item">
             <div>
-                <strong style="color: #6366f1;">${item.name}</strong><br>
+                <strong style="color: var(--primary);">${item.name}</strong><br>
                 <small>${item.date} - ${item.data.filter((i) => i.type === "work").length} ej.</small>
             </div>
-            <button onclick="loadRoutine(${item.id})" class="btn-repeat" style="padding: 5px 10px; font-size: 0.7rem; width: auto; background: #a855f7; color: white;">Cargar</button>
+            <button onclick="loadRoutine(${item.id})" class="btn-save" style="width: auto; padding: 5px 15px;">Cargar</button>
         </div>
     `,
     )
@@ -175,44 +198,33 @@ function loadRoutine(id) {
 
   if (routineToLoad) {
     routine = [...routineToLoad.data];
-
-    // --- CORRECCIÓN AQUÍ ---
-    // Al cargar una rutina, también debemos mostrar la sección de la lista
     document.getElementById("listSection").classList.remove("hidden");
     document.getElementById("display").classList.remove("hidden");
-
     updateList();
     window.scrollTo({ top: 0, behavior: "smooth" });
-    alert("Rutina '" + routineToLoad.name + "' cargada.");
   }
 }
 
 function clearHistory() {
-  if (confirm("¿Borrar todas tus rutinas guardadas?")) {
+  if (confirm("¿Borrar todo el historial?")) {
     localStorage.removeItem("workoutHistory");
     loadHistory();
   }
 }
+
 function exportRoutines() {
   const history = localStorage.getItem("workoutHistory");
-
-  if (!history || history === "[]") {
-    alert("No hay rutinas para exportar.");
-    return;
-  }
+  if (!history || history === "[]") return alert("No hay datos.");
 
   const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(history);
   const downloadAnchorNode = document.createElement("a");
-
   downloadAnchorNode.setAttribute("href", dataStr);
-  downloadAnchorNode.setAttribute("download", "mis_rutinas_focus.json");
+  downloadAnchorNode.setAttribute("download", "mis_rutinas.json");
   document.body.appendChild(downloadAnchorNode);
-
   downloadAnchorNode.click();
   downloadAnchorNode.remove();
 }
 
-// 2. Importar: Lee el archivo .json y lo guarda en el navegador
 function importRoutines(event) {
   const file = event.target.files[0];
   if (!file) return;
@@ -220,32 +232,19 @@ function importRoutines(event) {
   const reader = new FileReader();
   reader.onload = function (e) {
     try {
-      const importedData = JSON.parse(e.target.value || e.target.result);
-
+      const importedData = JSON.parse(e.target.result);
       if (Array.isArray(importedData)) {
-        // Preguntamos si quiere sobrescribir o combinar
-        if (
-          confirm(
-            "¿Quieres añadir estas rutinas a tu lista actual? (Cancelar para reemplazar todo)",
-          )
-        ) {
-          const currentHistory =
-            JSON.parse(localStorage.getItem("workoutHistory")) || [];
-          const mergedHistory = [...importedData, ...currentHistory];
-          localStorage.setItem("workoutHistory", JSON.stringify(mergedHistory));
-        } else {
-          localStorage.setItem("workoutHistory", JSON.stringify(importedData));
-        }
-
+        const current =
+          JSON.parse(localStorage.getItem("workoutHistory")) || [];
+        localStorage.setItem(
+          "workoutHistory",
+          JSON.stringify([...importedData, ...current]),
+        );
         loadHistory();
-        alert("¡Rutinas importadas con éxito! ❤️");
-      } else {
-        alert("El archivo no tiene el formato correcto.");
+        alert("¡Importado!");
       }
     } catch (err) {
-      alert(
-        "Error al leer el archivo. Asegúrate de que sea el .json que exportaste.",
-      );
+      alert("Error al importar.");
     }
   };
   reader.readAsText(file);
