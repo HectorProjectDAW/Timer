@@ -104,6 +104,7 @@ async function startRoutine() {
   document.getElementById("startBtn").style.display = "none";
   document.getElementById("historySection").classList.add("hidden");
   document.getElementById("pauseBtn").classList.remove("hidden");
+  document.getElementById("skipBtn").classList.remove("hidden");
 
   for (let item of routine) {
     const display = document.getElementById("display");
@@ -120,6 +121,7 @@ async function startRoutine() {
   victorySound.play();
 
   document.getElementById("pauseBtn").classList.add("hidden");
+  document.getElementById("skipBtn").classList.add("hidden");
   document.getElementById("status-label").innerText = "¡MUY BIEN AMOR! ❤️";
   document.getElementById("timer").innerText = "🏆";
   document.getElementById("currentTask").innerText =
