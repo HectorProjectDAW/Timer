@@ -263,3 +263,44 @@ function importRoutines(event) {
   };
   reader.readAsText(file);
 }
+
+function importJSONText() {
+  const textArea = document.getElementById("jsonPasteArea");
+  const textRaw = textArea.value.trim();
+
+  if (!textRaw) {
+    alert("Por favor, pega el código JSON en el recuadro.");
+    return;
+  }
+
+  try {
+    const importedData = JSON.parse(textRaw);
+
+    if (Array.isArray(importedData)) {
+      // Obtenemos historial actual
+      const current = JSON.parse(localStorage.getItem("workoutHistory")) || [];
+
+      // Combinamos: Lo importado primero, luego lo antiguo
+      localStorage.setItem(
+        "workoutHistory",
+        JSON.stringify([...importedData, ...current]),
+      );
+
+      loadHistory();
+      textArea.value = ""; // Limpiar el campo
+      alert("¡Rutinas importadas correctamente desde el texto!");
+
+      // Hacemos scroll hacia arriba para ver las nuevas rutinas
+      document
+        .getElementById("historySection")
+        .scrollIntoView({ behavior: "smooth" });
+    } else {
+      alert("El formato no es válido. Debe ser una lista [...] de rutinas.");
+    }
+  } catch (err) {
+    console.error(err);
+    alert(
+      "Error de formato: Asegúrate de copiar todo el código JSON correctamente (comillas, corchetes, comas).",
+    );
+  }
+}
