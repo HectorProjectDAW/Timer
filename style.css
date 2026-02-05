@@ -105,6 +105,21 @@ button {
     border: 1px solid rgba(255, 77, 148, 0.3);
 }
 
+.btn-clear {
+    background: rgba(255, 0, 0, 0.2);
+    color: #ff4d94;
+    border: 1px solid rgba(255, 77, 148, 0.3);
+    width: 100%;
+    padding: 10px;
+    margin-top: 15px;
+    font-size: 0.8rem;
+}
+
+.backup-controls .btn-pause {
+    margin-top: 0; /* Quitamos el margen superior para que el grid se vea limpio */
+    border-color: var(--primary);
+}
+
 .paused {
     background: var(--warning) !important;
     color: white;

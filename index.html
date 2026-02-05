@@ -1,5 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
+<!-- - sonido bonito
+
+- que se guarde todo
+
+- si se puede, cuando termine todo el ejercicio salga el sonido del esqueleto
+
+- importar / exportar !-->
 
 <head>
     <meta charset="UTF-8">
@@ -57,6 +64,18 @@
             <h3 style="margin-bottom: 15px; font-size: 1.1rem; opacity: 0.9;">Mis Rutinas</h3>
             <div id="workoutHistory" class="history-list"></div>
             <button class="btn-clear" onclick="clearHistory()">Limpiar Historial</button>
+            <div class="backup-controls"
+                style="margin-top: 15px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <button onclick="exportRoutines()" class="btn-pause" style="padding: 10px; font-size: 0.8rem;">📤
+                    Exportar</button>
+
+                <label for="importInput" class="btn-pause"
+                    style="padding: 10px; font-size: 0.8rem; cursor: pointer; text-align: center; display: block;">
+                    Importar
+                </label>
+                <input type="file" id="importInput" accept=".json" onchange="importRoutines(event)"
+                    style="display: none;">
+            </div>
         </section>
     </div>
 

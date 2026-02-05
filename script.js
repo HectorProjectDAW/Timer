@@ -193,3 +193,60 @@ function clearHistory() {
     loadHistory();
   }
 }
+function exportRoutines() {
+  const history = localStorage.getItem("workoutHistory");
+
+  if (!history || history === "[]") {
+    alert("No hay rutinas para exportar.");
+    return;
+  }
+
+  const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(history);
+  const downloadAnchorNode = document.createElement("a");
+
+  downloadAnchorNode.setAttribute("href", dataStr);
+  downloadAnchorNode.setAttribute("download", "mis_rutinas_focus.json");
+  document.body.appendChild(downloadAnchorNode);
+
+  downloadAnchorNode.click();
+  downloadAnchorNode.remove();
+}
+
+// 2. Importar: Lee el archivo .json y lo guarda en el navegador
+function importRoutines(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function (e) {
+    try {
+      const importedData = JSON.parse(e.target.value || e.target.result);
+
+      if (Array.isArray(importedData)) {
+        // Preguntamos si quiere sobrescribir o combinar
+        if (
+          confirm(
+            "¿Quieres añadir estas rutinas a tu lista actual? (Cancelar para reemplazar todo)",
+          )
+        ) {
+          const currentHistory =
+            JSON.parse(localStorage.getItem("workoutHistory")) || [];
+          const mergedHistory = [...importedData, ...currentHistory];
+          localStorage.setItem("workoutHistory", JSON.stringify(mergedHistory));
+        } else {
+          localStorage.setItem("workoutHistory", JSON.stringify(importedData));
+        }
+
+        loadHistory();
+        alert("¡Rutinas importadas con éxito! ❤️");
+      } else {
+        alert("El archivo no tiene el formato correcto.");
+      }
+    } catch (err) {
+      alert(
+        "Error al leer el archivo. Asegúrate de que sea el .json que exportaste.",
+      );
+    }
+  };
+  reader.readAsText(file);
+}
