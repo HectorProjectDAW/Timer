@@ -1,13 +1,19 @@
 :root {
-    /* Nueva paleta de rosas */
-    --primary: #ff4d94;      /* Rosa vibrante */
-    --secondary: #ff758c;    /* Rosa coral/suave */
-    --success: #2dd4bf;      /* Turquesa (combina genial con el rosa) */
-    --warning: #fbbf24;      /* Ámbar cálido */
-    --bg-gradient: linear-gradient(135deg, #1a050d 0%, #3d0a21 100%); /* Fondo vino oscuro */
+    /* Paleta Chicle y Pastel Girly */
+    --primary: #ff85a2;      /* Rosa chicle suave */
+    --secondary: #fbb1bd;    /* Rosa pastel algodón */
+    --success: #b2f7ef;      /* Mint/Turquesa pastel */
+    --warning: #fcf6bd;      /* Amarillo vainilla */
+    --text-main: #7a4a58;    /* Marrón rosado para legibilidad */
+    --bg-gradient: linear-gradient(135deg, #ffdde1 0%, #ee9ca7 100%); /* Strawberry Milk */
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+    font-family: 'Poppins', sans-serif; 
+}
 
 body {
     min-height: 100vh;
@@ -15,7 +21,7 @@ body {
     justify-content: center;
     align-items: center;
     background: var(--bg-gradient);
-    color: white;
+    color: var(--text-main); /* Cambiado a un tono oscuro suave para mejor contraste */
     overflow-x: hidden;
 }
 
@@ -23,41 +29,58 @@ input {
     font-size: 16px !important;
 }
 
-/* Efecto de orbes brillantes ajustado a rosas */
+/* Efecto de orbes brillantes estilo "Aura Pastel" */
 .background-overlay {
     position: fixed;
     width: 100vw;
     height: 100vh;
-    background: radial-gradient(circle at 20% 30%, rgba(255, 77, 148, 0.15) 0%, transparent 40%),
-                radial-gradient(circle at 80% 70%, rgba(255, 117, 140, 0.15) 0%, transparent 40%);
+    background: radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.4) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(208, 209, 255, 0.3) 0%, transparent 40%);
     z-index: -1;
 }
 
-.container { width: 90%; max-width: 450px; animation: fadeIn 0.8s ease-out; }
+.container { 
+    width: 90%; 
+    max-width: 450px; 
+    animation: fadeIn 0.8s ease-out; 
+}
 
 header { text-align: center; margin-bottom: 2rem; }
-header h1 { font-weight: 800; font-size: 2.5rem; letter-spacing: -1px; }
-header h1 span { color: var(--primary); text-shadow: 0 0 15px rgba(255, 77, 148, 0.5); }
-header p { opacity: 0.7; font-size: 0.9rem; }
+header h1 { 
+    font-weight: 800; 
+    font-size: 2.5rem; 
+    letter-spacing: -1px; 
+    color: white;
+    text-shadow: 2px 4px 0px var(--secondary);
+}
+header h1 span { 
+    color: var(--primary); 
+    text-shadow: 2px 2px 0px white; 
+}
+header p { 
+    opacity: 0.9; 
+    font-size: 0.9rem; 
+    font-weight: 500;
+}
 
 .glass-card {
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 77, 148, 0.2); /* Borde con tinte rosa */
-    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.7); /* Estilo leche de fresa */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 4px solid white; /* Efecto sticker */
+    border-radius: 30px;
     padding: 2rem;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 15px 35px rgba(238, 156, 167, 0.3);
     margin-bottom: 1.5rem;
 }
 
 .input-group input {
     width: 100%;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: white;
+    border: 2px solid var(--secondary);
     padding: 12px 20px;
-    border-radius: 12px;
-    color: white;
+    border-radius: 15px;
+    color: var(--text-main);
     margin-bottom: 10px;
     outline: none;
     transition: 0.3s;
@@ -65,8 +88,8 @@ header p { opacity: 0.7; font-size: 0.9rem; }
 
 .input-group input:focus { 
     border-color: var(--primary); 
-    background: rgba(255, 77, 148, 0.1); 
-    box-shadow: 0 0 10px rgba(255, 77, 148, 0.2);
+    background: white; 
+    box-shadow: 0 0 15px rgba(255, 133, 162, 0.2);
 }
 
 .time-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
@@ -74,9 +97,11 @@ header p { opacity: 0.7; font-size: 0.9rem; }
 button {
     cursor: pointer;
     border: none;
-    border-radius: 50px;
-    font-weight: 600;
+    border-radius: 20px; /* Más redondeados estilo 'pill' */
+    font-weight: 700;
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 #addBtn {
@@ -85,7 +110,7 @@ button {
     background: linear-gradient(90deg, var(--primary), var(--secondary));
     color: white;
     margin-top: 10px;
-    box-shadow: 0 4px 15px rgba(255, 77, 148, 0.3);
+    box-shadow: 0 5px 15px rgba(255, 133, 162, 0.4);
 }
 
 .btn-save { 
@@ -94,21 +119,22 @@ button {
     background: var(--secondary); 
     color: white; 
     margin-top: 5px;
+    box-shadow: 0 4px 0px #e099a5;
 }
 
 .btn-pause {
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
+    background: white;
+    color: var(--primary);
     padding: 16px 30px;
     width: 100%;
     margin-top: 10px;
-    border: 1px solid rgba(255, 77, 148, 0.3);
+    border: 2px solid var(--primary);
 }
 
 .btn-clear {
-    background: rgba(255, 0, 0, 0.2);
-    color: #ff4d94;
-    border: 1px solid rgba(255, 77, 148, 0.3);
+    background: rgba(255, 133, 162, 0.1);
+    color: var(--primary);
+    border: 2px dashed var(--primary);
     width: 100%;
     padding: 10px;
     margin-top: 15px;
@@ -116,65 +142,109 @@ button {
 }
 
 .backup-controls .btn-pause {
-    margin-top: 0; /* Quitamos el margen superior para que el grid se vea limpio */
-    border-color: var(--primary);
+    margin-top: 0;
+    border-color: var(--secondary);
+    color: var(--text-main);
 }
 
 .paused {
     background: var(--warning) !important;
-    color: white;
+    color: #8a7b00;
+    border: none;
 }
 
-button:hover { transform: scale(1.03); filter: brightness(1.1); }
+button:hover { transform: translateY(-3px); filter: brightness(1.05); }
+button:active { transform: translateY(0px); }
 
 .task-item {
-    background: rgba(255, 255, 255, 0.03);
+    background: white;
     padding: 12px 20px;
-    border-radius: 15px;
+    border-radius: 18px;
     margin-bottom: 8px;
     display: flex;
     justify-content: space-between;
-    border-left: 4px solid var(--primary);
+    align-items: center;
+    border: 2px solid var(--secondary);
+    color: var(--text-main);
 }
 
 .history-list {
     max-height: 250px;
     overflow-y: auto;
     margin-top: 10px; 
+    padding-right: 5px;
 }
 
+/* Scrollbar estética */
+.history-list::-webkit-scrollbar { width: 5px; }
+.history-list::-webkit-scrollbar-thumb { background: var(--secondary); border-radius: 10px; }
+
 .history-item {
-    background: rgba(255, 255, 255, 0.05);
+    background: white;
     padding: 12px;
     border-radius: 15px;
     margin-bottom: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-left: 5px solid var(--secondary);
 }
 
-.history-item span { opacity: 0.6; font-size: 0.75rem; }
+.history-item span { color: var(--text-main); opacity: 0.6; font-size: 0.75rem; }
 
 .timer-wrapper { text-align: center; }
-#status-label { font-size: 0.8rem; font-weight: 700; letter-spacing: 3px; color: var(--primary); }
-#timer { font-size: 6rem; font-weight: 800; line-height: 1; margin: 10px 0; }
-#currentTask { font-size: 1.5rem; margin-bottom: 20px; }
+#status-label { 
+    font-size: 0.85rem; 
+    font-weight: 800; 
+    letter-spacing: 3px; 
+    color: var(--primary); 
+    text-transform: uppercase;
+}
+#timer { 
+    font-size: 6rem; 
+    font-weight: 900; 
+    line-height: 1; 
+    margin: 10px 0; 
+    color: var(--primary);
+    text-shadow: 4px 4px 0px white;
+}
+#currentTask { 
+    font-size: 1.3rem; 
+    margin-bottom: 20px; 
+    font-weight: 600;
+    color: var(--text-main);
+}
 
 .btn-primary { 
     padding: 16px 30px; 
-    background: white; 
-    color: #3d0a21; /* Color del texto a juego con el fondo oscuro */
+    background: var(--primary); 
+    color: white; 
     width: 100%; 
     font-size: 1.1rem; 
+    box-shadow: 0 6px 0px #e06684;
 }
 
-.btn-secondary { background: transparent; color: white; padding: 10px; width: 100%; margin-top: 15px; opacity: 0.6; }
+.btn-secondary { 
+    background: transparent; 
+    color: var(--text-main); 
+    padding: 10px; 
+    width: 100%; 
+    margin-top: 15px; 
+    opacity: 0.7; 
+    text-decoration: underline;
+}
 
-.working { border: 2px solid var(--success); box-shadow: 0 0 20px rgba(45, 212, 191, 0.2); }
-.working #status-label { color: var(--success); }
+.working { 
+    border: 4px solid var(--success) !important; 
+    background: rgba(178, 247, 239, 0.4);
+}
+.working #status-label { color: #4fa89e; }
 
-.resting { border: 2px solid var(--warning); box-shadow: 0 0 20px rgba(245, 158, 11, 0.2); }
-.resting #status-label { color: var(--warning); }
+.resting { 
+    border: 4px solid var(--warning) !important; 
+    background: rgba(252, 246, 189, 0.4);
+}
+.resting #status-label { color: #9e9545; }
 
 .hidden { display: none; }
 
@@ -184,37 +254,13 @@ button:hover { transform: scale(1.03); filter: brightness(1.1); }
         align-items: flex-start;
         padding-top: 30px;
     }
-
-    .container {
-        width: 100%;
-    }
-
-    header h1 {
-        font-size: 2rem;
-    }
-
-    .glass-card {
-        padding: 1.2rem;
-        border-radius: 20px;
-    }
-
-    .time-inputs {
-        grid-template-columns: 1fr;
-    }
-
-    #timer {
-        font-size: 4.5rem; 
-    }
-
-    .task-item {
-        font-size: 0.9rem;
-        padding: 10px 15px;
-    }
-
-    button {
-        padding: 18px !important; 
-        font-size: 1rem;
-    }
+    .container { width: 100%; }
+    header h1 { font-size: 2rem; }
+    .glass-card { padding: 1.2rem; border-radius: 25px; }
+    .time-inputs { grid-template-columns: 1fr; }
+    #timer { font-size: 4.5rem; }
+    .task-item { font-size: 0.9rem; padding: 10px 15px; }
+    button { padding: 18px !important; font-size: 1rem; }
 }
 
 @media (max-height: 600px) {
@@ -223,6 +269,6 @@ button:hover { transform: scale(1.03); filter: brightness(1.1); }
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
 }
