@@ -74,6 +74,7 @@ header p {
     margin-bottom: 1.5rem;
 }
 
+
 .input-group input {
     width: 100%;
     background: white;
@@ -271,4 +272,72 @@ button:active { transform: translateY(0px); }
 @keyframes fadeIn {
     from { opacity: 0; transform: scale(0.95); }
     to { opacity: 1; transform: scale(1); }
+}
+
+/* Estilos personalizados para los sliders de volumen */
+input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 8px;
+    background: linear-gradient(90deg, var(--secondary), var(--primary));
+    border-radius: 10px;
+    border: 2px solid white;
+    box-shadow: 0 2px 5px rgba(238, 156, 167, 0.3);
+    outline: none;
+    cursor: pointer;
+}
+
+/* Thumb (el círculo) - WEBKIT */
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 22px;
+    height: 22px;
+    background: white;
+    border: 3px solid var(--primary);
+    border-radius: 50%;
+    cursor: grab;
+    box-shadow: 0 3px 8px rgba(255, 133, 162, 0.5);
+    transition: all 0.2s ease;
+}
+
+/* Thumb - FIREFOX */
+input[type="range"]::-moz-range-thumb {
+    width: 22px;
+    height: 22px;
+    background: white;
+    border: 3px solid var(--primary);
+    border-radius: 50%;
+    cursor: grab;
+    box-shadow: 0 3px 8px rgba(255, 133, 162, 0.5);
+    transition: all 0.2s ease;
+}
+
+/* Track - FIREFOX (necesario para que se vea la línea) */
+input[type="range"]::-moz-range-track {
+    background: transparent;
+    border: none;
+}
+
+/* Hover effects */
+input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+    box-shadow: 0 4px 12px rgba(255, 133, 162, 0.7);
+}
+
+input[type="range"]::-moz-range-thumb:hover {
+    transform: scale(1.2);
+    box-shadow: 0 4px 12px rgba(255, 133, 162, 0.7);
+}
+
+/* Active (cuando lo arrastras) */
+input[type="range"]::-webkit-slider-thumb:active {
+    cursor: grabbing;
+    transform: scale(1.1);
+}
+
+input[type="range"]::-moz-range-thumb:active {
+    cursor: grabbing;
+    transform: scale(1.1);
 }

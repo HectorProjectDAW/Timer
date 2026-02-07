@@ -52,10 +52,23 @@
                     <button class="btn-secondary" onclick="location.reload()">Reiniciar</button>
                 </div>
             </div>
-            <div class="audio-controls" style="margin-bottom: 15px; opacity: 0.8; font-size: 0.8rem;">
-                <label>🎵 Volumen Música</label>
-                <input type="range" id="volumeControl" min="0" max="1" step="0.1" value="0.5"
-                    style="width: 100%; accent-color: var(--primary);">
+            <div class="audio-controls"
+                style="margin-top: 20px; padding-top: 15px; border-top: 2px solid rgb(248, 150, 212);">
+                <div style="margin-bottom: 15px;">
+                    <label for="volumeMusic" style="display: block; margin-bottom: 5px; font-weight: 600;">
+                        🎵 Música: <span id="volumeMusicValue">50%</span>
+                    </label>
+                    <input type="range" id="volumeMusic" min="0" max="1" step="0.01" value="0.5"
+                        style="width: 100%; cursor: pointer;">
+                </div>
+
+                <div>
+                    <label for="volumeBeep" style="display: block; margin-bottom: 5px; font-weight: 600;">
+                        🔔 Pinpin: <span id="volumeBeepValue">90%</span>
+                    </label>
+                    <input type="range" id="volumeBeep" min="0" max="1" step="0.01" value="0.9"
+                        style="width: 100%; cursor: pointer;">
+                </div>
             </div>
         </section>
 

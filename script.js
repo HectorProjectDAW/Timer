@@ -1,13 +1,27 @@
 // 1. CONFIGURACIÓN DE SONIDOS (Siempre al principio)
 const ambientMusic = new Audio("assets/audio/Chill-Music.mp3");
 ambientMusic.loop = true;
+ambientMusic.volume = 0.5; // Volumen inicial 50%
 
 const victorySound = new Audio("assets/audio/skyrim-skeleton.mp3");
+victorySound.volume = 0.9; // Volumen inicial 90%
+
+const changePhase = new Audio("assets/audio/Beep.mp3");
+changePhase.volume = 0.9; // Volumen inicial 90%
 
 // Ajuste de volumen dinámico
 document.addEventListener("input", (e) => {
-  if (e.target.id === "volumeControl") {
+  if (e.target.id === "volumeMusic") {
     ambientMusic.volume = e.target.value;
+    document.getElementById("volumeMusicValue").innerText =
+      Math.round(e.target.value * 100) + "%";
+  }
+
+  if (e.target.id === "volumeBeep") {
+    changePhase.volume = e.target.value;
+    victorySound.volume = e.target.value;
+    document.getElementById("volumeBeepValue").innerText =
+      Math.round(e.target.value * 100) + "%";
   }
 });
 
@@ -88,7 +102,7 @@ function togglePause() {
   if (isPaused) {
     ambientMusic.pause();
   } else {
-    ambientMusic.play().catch(() => {}); // El catch evita errores si el navegador bloquea el audio
+    ambientMusic.play().catch(() => {});
   }
 }
 
@@ -114,6 +128,10 @@ async function startRoutine() {
       item.type === "work" ? "ENTRENANDO" : "DESCANSO";
 
     await runTimer(item.name, item.time);
+
+    // 🔊 REPRODUCIR BEEP AL CAMBIAR DE FASE
+    changePhase.currentTime = 0;
+    changePhase.play().catch(() => {});
   }
 
   // Finalización
@@ -277,20 +295,16 @@ function importJSONText() {
     const importedData = JSON.parse(textRaw);
 
     if (Array.isArray(importedData)) {
-      // Obtenemos historial actual
       const current = JSON.parse(localStorage.getItem("workoutHistory")) || [];
-
-      // Combinamos: Lo importado primero, luego lo antiguo
       localStorage.setItem(
         "workoutHistory",
         JSON.stringify([...importedData, ...current]),
       );
 
       loadHistory();
-      textArea.value = ""; // Limpiar el campo
+      textArea.value = "";
       alert("¡Rutinas importadas correctamente desde el texto!");
 
-      // Hacemos scroll hacia arriba para ver las nuevas rutinas
       document
         .getElementById("historySection")
         .scrollIntoView({ behavior: "smooth" });
